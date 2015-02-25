@@ -83,6 +83,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TrebleReedsGrid.resx">
       <DependentUpon>TrebleReedsGrid.cs</DependentUpon>
@@ -96,6 +97,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="standard.preamble" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

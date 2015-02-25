@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fr8xTesting
 {
-    public class TrebleRegister : Chunk 
+    public class TrebleRegister : Chunk
     {
-       
-        public TrebleRegister(byte[] data) { Data = data; }
 
-        public String name {
+        public TrebleRegister(byte[] data) : base(data) {}
+
+        public String Name {
             get { return GetAscii(0, 8); }
             set { PutAscii(value, 0, 8); } 
+        }
+
+        public TrebleVoice this[int x]
+        {
+            get { return GetTrebleVoice(x); }
+            set { SetTrebleVoice(x, value); }
         }
 
         public TrebleVoice GetTrebleVoice(int voice)
@@ -23,22 +30,22 @@ namespace Fr8xTesting
             MidiVoice thePatch = new MidiVoice() { Cc00 = Data[8+voice], Cc32 = Data[18+voice], Pc = Data[28+voice] };
             TrebleVoice tv = new TrebleVoice()
                              {
-                                 patch = thePatch, 
-                                 enabled = GetBoolean(38+voice),
-                                 cassotto = GetBoolean(48+voice),
-                                 volume = Data[58+voice]
+                                 Patch = thePatch, 
+                                 Enabled = GetBoolean(38+voice),
+                                 Cassotto = GetBoolean(48+voice),
+                                 Volume = Data[58+voice]
                              };
             return tv;
         }
 
         public void SetTrebleVoice(int voice, TrebleVoice input)
         {
-            Data[8 + voice] = (byte) input.patch.Cc00;
-            Data[18 + voice] = (byte) input.patch.Cc32;
-            Data[28 + voice] = (byte) input.patch.Pc;
-            PutBoolean(input.enabled, 38 + voice);
-            PutBoolean(input.cassotto, 48 + voice);
-            Data[58 + voice] = (byte) input.volume;
+            Data[8 + voice] = (byte) input.Patch.Cc00;
+            Data[18 + voice] = (byte) input.Patch.Cc32;
+            Data[28 + voice] = (byte) input.Patch.Pc;
+            PutBoolean(input.Enabled, 38 + voice);
+            PutBoolean(input.Cassotto, 48 + voice);
+            Data[58 + voice] = input.Volume;
         }
 
         public bool OrchestralMode { get { return GetBoolean(68); } set { PutBoolean(value, 68); } }
@@ -57,7 +64,7 @@ namespace Fr8xTesting
     class OrchestraRightRegister : Chunk
     {
         
-        public OrchestraRightRegister(byte[] data) { Data = data; }
+        public OrchestraRightRegister(byte[] data) : base(data) { }
 
         public string name {
             get { return GetAscii(0, 12); } 

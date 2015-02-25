@@ -24,12 +24,5 @@ namespace Fr8xTesting
             "Extra3"
         };
 
-        public static readonly Dictionary<string, Type> decoders =
-          new Dictionary<string, Type>()
-          {
-              {"TR",typeof(TrebleRegister)},
-              {"O_R",typeof(OrchestraRightRegister)}
-          };
-
     }
 }

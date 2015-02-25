@@ -4,26 +4,37 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Fr8xTesting
 {
-    public struct MidiVoice
+    public class MidiVoice
     {
-        public int Cc00;
-        public int Cc32;
-        public int Pc;
+        public int Cc00 { get; set; }
+        public int Cc32 { get; set; }
+        public int Pc { get; set; }
     }
 
-    public struct TrebleVoice
+    public class TrebleVoice
     {
-        public MidiVoice patch;
-        public bool enabled;
-        public bool cassotto;
-        public byte volume;
+        public MidiVoice Patch { get; set; }
+        public bool Enabled { get; set; }
+        public bool Cassotto { get; set; }
+        public byte Volume { get; set; }
     }
     public class Chunk
     {
         protected byte[] Data;
+
+        public Chunk(byte[] inData)
+        {
+            Data = inData;
+        }
+
+        public byte[] GetRawData()
+        {
+            return Data;
+        }
 
         public string GetAscii(int offset, int length)
         {

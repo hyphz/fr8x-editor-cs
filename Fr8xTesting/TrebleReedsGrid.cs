@@ -26,10 +26,10 @@ namespace Fr8xTesting
             {
                 var voice = _tr.GetTrebleVoice(x);
                 dataGridView1.Rows.Add(Constants.reedFeet[x],
-                    voice.patch.Pc,
-                    voice.enabled,
-                    voice.cassotto,
-                    voice.volume);
+                    voice.Patch.Pc,
+                    voice.Enabled,
+                    voice.Cassotto,
+                    voice.Volume);
             }
         }
         public void SetTrebleRegister(TrebleRegister tr)

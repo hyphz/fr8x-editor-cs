@@ -27,14 +27,8 @@ namespace Fr8xTesting
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 SetData x = new SetData(ofd.FileName);
-                foreach (var y in x.Chunks)
-                {
-                    if (y.GetType() == typeof(TrebleRegister))
-                    {
-                        trebleReedsGrid1.SetTrebleRegister((TrebleRegister)y);        
-                    }
-                }
-                
+                x.WriteToFile("test.st8");
+
             }
         }
     }
