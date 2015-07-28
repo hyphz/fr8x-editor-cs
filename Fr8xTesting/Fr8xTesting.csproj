@@ -46,6 +46,11 @@
   <ItemGroup>
     <Compile Include="BitStream.cs" />
     <Compile Include="Chunk.cs" />
+    <Compile Include="ChunksGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChunksGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\BitStream.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -88,6 +93,10 @@
     <EmbeddedResource Include="TrebleReedsGrid.resx">
       <DependentUpon>TrebleReedsGrid.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ChunksGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChunksGenerator.cs</LastGenOutput>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

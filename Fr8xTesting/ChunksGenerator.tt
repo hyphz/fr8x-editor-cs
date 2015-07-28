@@ -1,0 +1,120 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+<#
+   Dictionary<String,PartInfo[]> parts = new Dictionary<String, PartInfo[]>() 
+   { { "TrebleRegister", new PartInfo[] { 
+				new PartInfo {name="Name",type=TYPE_ASCII,width=8},
+				new PartInfo {name="TrebleDataDecodedInClass",type=TYPE_SKIP,width=60},
+		        new PartInfo {name="OrchestralMode",type=TYPE_BOOL},
+				new PartInfo {name="OrchestralToneNum",type=TYPE_BYTE},
+				new PartInfo {name="MusetteDetune",type=TYPE_BYTE},
+				new PartInfo {name="ReverbSend",type=TYPE_BYTE},
+				new PartInfo {name="ChorusSend",type=TYPE_BYTE},
+				new PartInfo {name="DelaySend",type=TYPE_BYTE},
+				new PartInfo {name="BellowPitchDetune",type=TYPE_BYTE},
+				new PartInfo {name="Octave",type=TYPE_BYTE},
+				new PartInfo {name="ValveNoiseEnabled",type=TYPE_BOOL},
+				new PartInfo {name="ValveNoiseVolume",type=TYPE_BYTE},
+				new PartInfo {name="ValveNoiseVoice",type=TYPE_MIDI},
+				new PartInfo {name="LinkBassR",type=TYPE_BYTE},
+				new PartInfo {name="LinkOrchBassR",type=TYPE_BYTE},
+				new PartInfo {name="LinkOrchChordFBR",type=TYPE_BYTE},
+				new PartInfo {name="AftertouchPitchDown",type=TYPE_BYTE},
+				new PartInfo {name="NoteTXFilter",type=TYPE_BYTE},
+				new PartInfo {name="NoteOnVelocity",type=TYPE_BYTE},
+				new PartInfo {name="MidiOctave",type=TYPE_BYTE} 
+			} 
+		}, 
+		{ 
+			"SetCommon", new PartInfo[]{ 
+				new PartInfo {name="Creator",type=TYPE_ASCII,width=4},
+				new PartInfo {name="Type",type=TYPE_ASCII,width=4},
+				new PartInfo {name="Ver",type=TYPE_ASCII,width=4},
+				new PartInfo {name="Num",type=TYPE_ASCII,width=4},
+				new PartInfo {name="Name",type=TYPE_ASCII,width=8},
+				new PartInfo {name="ReverbCharacter",type=TYPE_BYTE},
+				new PartInfo {name="ReverbPreLPF",type=TYPE_BYTE},
+				new PartInfo {name="ReverbTime",type=TYPE_BYTE},
+				new PartInfo {name="ReverbDelay",type=TYPE_BYTE},
+				new PartInfo {name="ReverbPredelay",type=TYPE_BYTE},
+				new PartInfo {name="ReverbLevel",type=TYPE_BYTE},
+				new PartInfo {name="ReverbSelected",type=TYPE_BYTE},
+				new PartInfo {name="ChorusPreLPF",type=TYPE_BYTE},
+				new PartInfo {name="ChorusFeedback",type=TYPE_BYTE},
+				new PartInfo {name="ChorusDelay",type=TYPE_BYTE},
+				new PartInfo {name="ChorusRate",type=TYPE_BYTE},
+				new PartInfo {name="ChorusDepth",type=TYPE_BYTE},
+			} 
+		} 
+	}; 
+
+
+   
+   #>
+
+namespace Fr8xTesting {
+<# foreach (String chunk in parts.Keys) { #>
+    public partial class <#= chunk #> : Chunk {
+
+        public <#= chunk #>(byte[] data) : base(data) {}
+
+<# int offset = 0;
+foreach (PartInfo part in parts[chunk]) {
+  if (part.type == TYPE_BYTE) {
+#>
+        public byte <#= part.name #> { get { return Data[<#= offset #>]; } set { Data[<#= offset #>] = value; } }
+<#
+  offset++;
+  }
+
+  if (part.type == TYPE_MIDI) {
+#>
+        public MidiVoice <#= part.name #> { get { return GetMidiVoice(<#= offset #>); } set { PutMidiVoice(value,<#= offset #>); } }
+<#
+  offset+=3;
+  }
+
+  if (part.type == TYPE_ASCII) {
+#>
+        public string <#= part.name #> { get { return GetAscii(<#= offset #>, <#=offset + part.width#>); } set { PutAscii(value,<#= offset #>,<#= offset+part.width#>); } }
+<#
+  offset+=part.width;
+  }
+
+  if (part.type == TYPE_BOOL) {
+#>
+        public bool <#= part.name #> { get { return GetBoolean(<#= offset #>); } set { PutBoolean(value,<#= offset #>); } }
+<#
+  offset++;
+  }
+
+  if (part.type == TYPE_SKIP) {
+  offset+=part.width;
+  }
+
+
+} #>
+
+	}
+	<# } #>
+
+}
+
+
+<#+ 
+   public class PartInfo {
+	public String name;
+	public int type;
+	public int width;
+   }
+   int TYPE_BYTE = 1;
+   int TYPE_MIDI = 2;
+   int TYPE_ASCII = 3;
+   int TYPE_BOOL = 4;
+   int TYPE_SKIP = 5;
+#>

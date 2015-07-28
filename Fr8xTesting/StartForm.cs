@@ -27,8 +27,7 @@ namespace Fr8xTesting
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 SetData x = new SetData(ofd.FileName);
-                x.WriteToFile("test.st8");
-
+                trebleReedsGrid1.SetTrebleRegister(x.TrebleRegisters[0]);
             }
         }
     }

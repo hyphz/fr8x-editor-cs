@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.trebleRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Foot = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reedType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Enabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Cassotto = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.trebleRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trebleRegisterBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +56,10 @@
             this.dataGridView1.Size = new System.Drawing.Size(544, 199);
             this.dataGridView1.TabIndex = 0;
             // 
+            // trebleRegisterBindingSource
+            // 
+            this.trebleRegisterBindingSource.DataSource = typeof(Fr8xTesting.TrebleRegister);
+            // 
             // Foot
             // 
             this.Foot.HeaderText = "Foot";
@@ -65,6 +69,32 @@
             // reedType
             // 
             this.reedType.HeaderText = "Reed Type";
+            this.reedType.Items.AddRange(new object[] {
+            "Jazz",
+            "Bandoneon",
+            "I-Folk",
+            "I-Folk2",
+            "D-Folk",
+            "OldItaly",
+            "Steierische",
+            "Cajun",
+            "TexMex",
+            "F-Folk",
+            "F-Folk2",
+            "SP-Folk",
+            "Concerto",
+            "Organetto",
+            "Classic",
+            "F-Jazz",
+            "Bayan",
+            "I-Scala",
+            "1871-Dallape",
+            "Centenary-Dallape",
+            "Liturgi1-Dallape",
+            "Liturgi2-Dallape",
+            "Organtone-Dallape",
+            "SM1965-Dallape",
+            "SM2010-Dallape"});
             this.reedType.Name = "reedType";
             // 
             // Enabled
@@ -82,10 +112,6 @@
             // 
             this.Volume.HeaderText = "Volume";
             this.Volume.Name = "Volume";
-            // 
-            // trebleRegisterBindingSource
-            // 
-            this.trebleRegisterBindingSource.DataSource = typeof(Fr8xTesting.TrebleRegister);
             // 
             // TrebleReedsGrid
             // 
